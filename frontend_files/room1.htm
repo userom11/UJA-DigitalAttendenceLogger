@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<title>Student Attendence</title>
+
+</head>
+
+<body>
+
+<h1>Student Attendence Room 1, Mr Dlamini</h1>
+<p id='0v'></p>
+<button id='0b' onclick=mark(0)>Mark Absent</button>
+<p id='1v'></p>
+<button id='1b' onclick=mark(1)>Mark Absent</button>
+<p id='2v'></p>
+<button id='2b' onclick=mark(2)>Mark Absent</button>
+<p id='3v'></p>
+<button id='3b' onclick=mark(3)>Mark Absent</button>
+<p id='4v'></p>
+<button id='4b' onclick=mark(4)>Mark Absent</button>
+<p id='5v'></p>
+<button id='5b' onclick=mark(5)>Mark Absent</button>
+<p id='6v'></p>
+<button id='6b' onclick=mark(6)>Mark Absent</button>
+<p id='7v'></p>
+<button id='7b' onclick=mark(7)>Mark Absent</button>
+<p id='8v'></p>
+<button id='8b' onclick=mark(8)>Mark Absent</button>
+<p id='9v'></p>
+<button id='9b' onclick=mark(9)>Mark Absent</button>
+
+<button onclick=send()>Send</button>
+
+<script src="/class1.js"></script>
+<script>
+
+let presence = {"here": [true, true, true, true, true, true, true, true, true, true]};
+
+for (let i = 0; i <= 9; i++) {
+    document.getElementById(`${i}v`).innerHTML = Students.students[i];
+}
+function mark(studentnumber){ 
+	presence.here[studentnumber] = !presence.here[studentnumber];
+	if (presence.here[studentnumber] == false){ document.getElementById(studentnumber+'b').innerHTML="Mark Present"; }
+	if (presence.here[studentnumber] == true){ document.getElementById(studentnumber+'b').innerHTML="Mark Absent"; }
+	console.log(presence.here)
+}
+function send(){
+	fetch("/attendenceroom1", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(presence) })
+	.then(response => response.json())
+	.then(result => console.log("Success", result))
+	.catch(error => console.error("Error", errors));
+}
+</script>
+
+</body>
