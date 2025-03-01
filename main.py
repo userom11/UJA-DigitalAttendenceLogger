@@ -1,9 +1,45 @@
-import os,  json,  time
+import os,  json, time, re
+from datetime import datetime deltatime
 from http.server import SimpleHTTPRequestHandler, HTTPServer, BaseHTTPRequestHandler
 
+def getime(type):
+    now = datetime.now()
+    year = now.year
+    month = now.month
+    date = now.day
+    timesecs = (now.hour * 3600) + (now.minute * 60)
+    terms =( json.loads( re.search(r'\{.*\}', open("backend_static_files/termdates.js", "r").read() ).group(0)) )["datesecs"]
+    for n in range(0,3):
+        if timesecs >= terms[n] and timesecs < terms[n+1]:
+            current_term=n # term 1 to 4 (programming numbers, 0 to 3)
+            break
+
+    january_first = datetime(year, 1, 1).weekday()
+    termstartday =terms[n]//86400
+    currentday =(time.time())//86400
+    p = (termstartday+january_first)%7
+    current_term_day = currentday - termstartday +1
+    current_term_week = (current_term_day -p +1)/7
+    
+    periods =( json.loads( re.search(r'\{.*\}', open("backend_static_files/periodtimes.js", "r").read() ).group(0)) )["times"]
+    for x in range(0,12):
+        if timesecs >= periods[x] and timesecs < periods[x+1]:
+            current_period=x # period 1 to 13 (breaks, assembly, block session counts as a period) (programming number system: 0 to 12)
+            break
+
+    if type=="termweek":
+        return termweek
+    if type=="current_period":
+        if current_period:
+            return current_period
+
+getime()
 def logattendence(data):
     print(data)
-    filetowrite = open("/home/o/Digital_Attendence_System/backend_dyna_files/c1p1.js", "w")
+    termweek = getime("termweek")
+    currentperiod = getime("currentperiod")
+    weekday = now.weekday()
+    filetowrite = open(f"backend_dyna_files/week{termweek}/{weekday+1}/c1p1.js", "w")
     filetowrite.write("const=presence"+" "+json.dumps(data))
 
 class main(BaseHTTPRequestHandler):
