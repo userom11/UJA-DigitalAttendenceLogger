@@ -66,6 +66,12 @@ class main(BaseHTTPRequestHandler):
             # with open(f"backend_dyna_files/week{termweek}/{weekday+1}/c1p{current_period}.js", 'rb') as file:
             with open("backend_dyna_files/c1p2.js", 'rb') as file:
                 self.wfile.write(file.read())
+        if self.path == '/class1':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/javascript')
+            self.end_headers()
+            with open("backend_static_files/class1.js", 'rb') as file:
+                self.wfile.write(file.read())
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)

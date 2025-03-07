@@ -5,39 +5,94 @@
 
 <title>UJA Student Attendence View</title>
 
+<style>
+
+.Registerview{
+	display: flex; gap: 10px;
+}
+.sn,.na,.p{
+	border: 1px solid black;
+}
+</style>
+  
 </head>
 
 <body>
 
-<button id='0b' onclick=select(0)>Select Class 1</button>
-<button id='1b' onclick=select(1)>Select Class 2</button>
-<button id='2b' onclick=select(2)>Select Class 3</button>
-<button id='3b' onclick=select(3)>Select Class 4</button>
-<button id='4b' onclick=select(4)>Select Class 5</button>
-<button id='5b' onclick=select(5)>Select Class 6</button>
-<button id='6b' onclick=select(6)>Select Class 7</button>
-<button id='7b' onclick=select(7)>Select Class 8</button>
-<button id='8b' onclick=select(8)>Select Class 9</button>
-<button id='9b' onclick=select(9)>Select Class 10</button>
-
-<button onclick=send()>Print</button>
+<button onclick=print()>Print</button>
 <button onclick=viewfunc()>View</button>
 
+<div id="Registerview" class="Registerview">
+
+<div id="sn" class="sn"></div>
+<div id="p" class="p"></div>
+<div id="na" class="na"></div>
+
+</div>
+
 <script src="/todayclass1"></script>
+<script src="/class1"></script>
 <script>
 
-let view= {"status": [false, false, false, false, false, false, false, false, false, false]};
-function select(classnumber){
-	view.status[classnumber] = !view.status[classnumber];
-	if (view.status[classnumber] == true){document.getElementById(classnumber+'b').innerHTML = `Unselect Class ${classnumber}`;}
-	if (view.status[classnumber] == false){document.getElementById(classnumber+'b').innerHTML = `Select Class ${classnumber}`;}
+function scbn(){
+const specifyclasstext = document.createElement("p");
+const specify = document.createElement("input");
+specifyclasstext.innerHTML = "Type Classroom Number (1 to 30)";
+specify.placeholder = "0";
+document.body.appendChild(specifyclasstext);
+document.body.appendChild(specify);
+specify.type = "number";
+specify.id = "numberInput"; // doesnt matter for now
+specify.min = 1;
+specify.max = 30;
+specify.addEventListener("change", () => {
+  console.log("Entered value:", specify.value);
+  createTable();
+});
+const select = document.createElement("button");
+select.innerHTML = "Select";
+document.body.appendChild(select);
 }
-function viewfunc(){
-	console.log(presence)
-	const para = document.createElement("p");
-	para.innerHTML = "This is a paragraph.";
-	document.appendChild(para);
+
+function viewfunc(){scbn()}
+
+function print(){
+scbn()
+const iwantalltxt = document.createElement("p");
+const iwantall = document.createElement("button");
+iwantalltxt.innerHTML = "OR";
+iwantall.innerHTML = "Select All"; // doesnt matter for now
+document.body.appendChild(iwantalltxt);
+document.body.appendChild(iwantall);
 }
+
+
+function createTable() {
+	amountlearners=presence.here.length;
+	hereornot=presence.here;
+	stud = Students.students
+	const sn = document.getElementById("sn");
+	const p = document.getElementById("p");
+	const na = document.getElementById("na");
+	for (let i = 0; i <= amountlearners -1; i++) {
+    	console.log(i)
+    	a = eval("'snn'+i")
+    	eval("a =  document.createElement('p');")
+    	eval("a.innerHTML = i+1;")
+    	eval("sn.appendChild(a)")   	
+    	b = eval("'snn'+i")
+    	eval("b =  document.createElement('p');")
+    	eval("b.innerHTML = stud[i];")
+    	eval("na.appendChild(b)")   	
+    	c = eval("'snn'+i")
+    	eval("c =  document.createElement('p');")
+    	eval("c.innerHTML = hereornot[i];")
+    	eval("p.appendChild(c)")   	
+}
+
+
+}
+
 </script>
 
 </body>
