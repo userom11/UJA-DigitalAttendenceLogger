@@ -3,7 +3,5 @@ Frontend 1 Decor
 Frontend 2 Decor (still waiting for Om)
 
 Om
-multirooms
-multiclasses
-keys for FET
-Security & Stabiliy analyses and improvment
+multiple rooms & classes 
+test the fucking hell out of it to make sure it works
