@@ -1,6 +1,5 @@
 Rudra
 Frontend 1 Decor
-Frontend 2 Decor (still waiting for Om)
 
 Om
 multiple rooms & classes 
